@@ -9,14 +9,15 @@ colDict.Add "Magenta", "FF00DE"
 colDict.Add "Purple", "CD00FF"
 colDict.Add "Warmwhite", "FFEBAF"
 colDict.Add "White", "FFF4F0"
+colDict.Add "Pink", "FFDEDE"
+colDict.Add "Oldlace", "FFEBAF"
 colKeys = colDict.Keys
 
-'WScript.Echo "Getting cheerlights"
 colCheer = getCheerlights
 
 For Each strKey in colKeys
 	If LCase(colCheer) = LCase(strKey) Then
-		'WScript.Echo "Setting cheerlights to " & strKey & " " & colDict.Item(strKey)
+		echo "Setting cheerlights to " & strKey & " " & colDict.Item(strKey)
 		Call blink1(colDict.Item(strKey))
 		Exit For
 	End If
@@ -27,7 +28,7 @@ Function blink1(color)
 	r = CLng("&h" & Left(color, 2))
 	g = CLng("&h" & Mid(color, 3, 2))
 	b = CLng("&h" & Right(color, 2))
-	'WScript.Echo r & " " & g & " " & b
+	echo r & " " & g & " " & b
 	Set WshShell = WScript.CreateObject("WScript.Shell")
 	return = WshShell.Run("blink1-tool.exe -m 100 --rgb " & r & "," & g & "," & b, 0, true)
 	Set WshShell = Nothing
@@ -35,7 +36,6 @@ End Function
 
 Function getCheerlights
 	strUrl = "http://api.thingspeak.com/channels/1417/field/1/last.txt"
-	echo "getCheerlights"
 	Set http = CreateObject("Microsoft.XmlHttp")
 	http.Open "GET", strUrl, False
 	http.Send
